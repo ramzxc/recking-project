@@ -54,10 +54,11 @@ node index.js
 ```bash
 psql -U postgres -d recking -f setup/schema.sql
 ```
-# (선택) 더미 데이터 입력
+(선택) 더미 데이터 입력
+```bash
 psql -U postgres -d recking -f setup/seed.sql
-
-# schema.sql과 seed.sql은 같은 데이터베이스에 적용해야 합니다.
+```
+schema.sql과 seed.sql은 같은 데이터베이스에 적용해야 합니다.
 
 ---
 
