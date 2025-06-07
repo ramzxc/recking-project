@@ -62,9 +62,9 @@ class HomeScreen extends StatelessWidget {
   Widget _buildTopBar(double statusBar) {
     return Container(
       padding: EdgeInsets.only(top: statusBar + 10, left: 20, right: 20, bottom: 6),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
+        children: [
           Text("RECKING", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, letterSpacing: 2)),
           Icon(Icons.search, size: 32),
         ],
@@ -82,8 +82,8 @@ class HomeScreen extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Stack(
-        children: const [
+      child: const Stack(
+        children: [
           Positioned(
             left: 16,
             bottom: 18,
