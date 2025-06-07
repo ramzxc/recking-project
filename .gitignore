@@ -1,4 +1,17 @@
-*.env
+# Node backend
+/backend/node_modules/
+/backend/.env
+/backend/build/
+
+# Flutter frontend
+/frontend/build/
+/frontend/.dart_tool/
+/frontend/.idea/
+/frontend/.packages
+
+# OS and editor junk
+.DS_Store
+Thumbs.db
 
 # Miscellaneous
 *.class

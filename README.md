@@ -1,37 +1,104 @@
-# 🏠 Recking Project - 백엔드
+# 🏠 Recking Project
 
-**테크노경영 - 유희왕 앱의 백엔드 서버입니다.**
-
-이 서버는 Node.js, Express, PostgreSQL 기반으로 구성되어 있습니다.
+**테크노경영 - 유희왕 앱 (Recking)의 백엔드 및 프론트엔드 프로젝트입니다.**
 
 ---
 
-## 🛠 로컬 개발 환경 설정 방법
+## 📁 프로젝트 구조
 
-### 1️⃣ PostgreSQL 설치 및 DB 생성 
-- PostgreSQL을 설치합니다.
-- 아래 명령어로 새 데이터베이스를 생성합니다:
-
-```bash
-createdb recking
 ```
-### 2️⃣ .env 파일 만들기
-루트 디렉토리에 .env 파일을 만들고 아래 내용을 복붙붙
+Recking/
+├── backend/        # Node.js + Express 백엔드 서버
+│   ├── routes/
+│   ├── controllers/
+│   ├── setup/schema.sql
+│   ├── pool.js
+│   ├── index.js
+│   └── .env.example
+├── frontend/       # Flutter 커뮤니티 앱 (웹)
+│   ├── lib/
+│   │   ├── models/post.dart
+│   │   ├── services/api_service.dart
+│   │   └── main.dart
+│   └── pubspec.yaml
+└── README.md
+```
+
+---
+
+## 🛠 백엔드 설정 방법 (Node.js + PostgreSQL)
+
+### 1️⃣ PostgreSQL 설치 및 DB 생성
+```bash
+createdb playmaking
+```
+
+### 2️⃣ `.env` 파일 만들기 (예시: `backend/.env`)
 ```env
-DATABASE_URL=postgres://your_user:your_password@localhost:5432/recking
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=playmaking
+DB_PASSWORD=your_password
+DB_PORT=5432
 PORT=5000
 ```
 
 ### 3️⃣ 의존성 설치 및 서버 실행
 ```bash
+cd backend
 npm install
 node index.js
 ```
 
 ### 4️⃣ 데이터베이스 테이블 생성
 ```bash
-psql -U postgres -d recking -f setup/schema.sql
+psql -U postgres -d playmaking -f setup/schema.sql
 ```
+
+---
+
+## 💬 프론트엔드 설정 방법 (Flutter Web)
+
+### 1️⃣ Flutter SDK 설치  
+- https://docs.flutter.dev/get-started/install 참고  
+- Flutter 3.32.2 이상 권장
+
+### 2️⃣ 의존성 설치
+```bash
+cd frontend
+flutter pub get
+```
+
+### 3️⃣ 앱 실행 (웹)
+```bash
+flutter run -d chrome
+```
+
+> ⚠️ 에러 발생 시 `flutter doctor`로 개발 환경 점검하세요.
+
+---
+
+## ✅ API 예시
+
+| Method | Endpoint         | Description           |
+|--------|------------------|-----------------------|
+| GET    | `/posts`         | 커뮤니티 게시글 불러오기 |
+| POST   | `/posts`         | 게시글 생성 (추후 구현) |
+
+---
+
+## 🧪 개발 시 유의사항
+
+- 커밋 메시지는 `[백엔드]`, `[프론트엔드]` 접두사 사용
+- Flutter 앱에서 API URL은 `localhost:5000`을 기준으로 설정되어 있습니다. 배포 시 수정 필요
+
+---
+
+## 🧾 참고자료
+
+- [Flutter 공식 문서](https://docs.flutter.dev/)
+- [PostgreSQL 공식 문서](https://www.postgresql.org/docs/)
+- [Node.js Express 공식 문서](https://expressjs.com/)
 
 # community_app
 
