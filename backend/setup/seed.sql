@@ -1,6 +1,12 @@
--- posts ë”ë¯¸ ë°ì´í„°
+-- 1. users Å×ÀÌºí 
+INSERT INTO users (id, email, password_hash, username)
+VALUES 
+  (1, 'user1@example.com', 'hashed_pw_1', 'user1'),
+  (2, 'user2@example.com', 'hashed_pw_2', 'user2');
+
+-- 2.  posts Å×ÀÌºí
 INSERT INTO posts (user_id, content, location, images)
 VALUES
-  (1, 'ì˜¤ëŠ˜ ì„±ìˆ˜ ë†€ëŸ¬ê°”ë‹¤ê°€ ì‚¬ì§„ ë§ì´ ì°ì—ˆì–´ìš”!', 'ì„±ìˆ˜ë™', ARRAY['https://picsum.photos/200', 'https://picsum.photos/300']),
-  (2, 'ë ˆë“œë²„íŠ¼ ì§„ì§œ ì¬ë°ŒìŒ ã„¹ã…‡', 'ì„œìš¸ ì„±ë™êµ¬', ARRAY['https://picsum.photos/201']),
-  (3, 'ì¹´í˜ íˆ¬ì–´ í•˜ë‹¤ê°€ ì¢‹ì€ ë° ì°¾ì•˜ìŒ!', 'ì„œìš¸ ì¤‘êµ¬', ARRAY[]::text[]);
+  (1, '¿À´Ã ¼º¼ö ³î·¯°¬´Ù°¡ »çÁø ¸¹ÀÌ Âï¾ú¾î¿ä!', '¼º¼öµ¿', ARRAY['https://picsum.photos/200', 'https://picsum.photos/300']),
+  (2, '·¹µå¹öÆ° ÁøÂ¥ Àç¹ÕÀ½ ¤©¤·', '¼­¿ï ¼ºµ¿±¸', ARRAY['https://picsum.photos/201']),
+  (1, 'Ä«Æä Åõ¾î ÇÏ´Ù°¡ ÁÁÀº µ¥ Ã£¾ÒÀ½!', '¼­¿ï Áß±¸', ARRAY[]::text[]);
