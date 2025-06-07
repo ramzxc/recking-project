@@ -1,23 +1,335 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '커뮤니티 앱',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-      ),
-      home: const CommunityHomePage(),
+      home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
+void main() {
+  runApp(const MyApp());
+}
+
+/*
+void main() {
+  runApp(MaterialApp(
+    home: HomeScreen(),
+    debugShowCheckedModeBanner: false,
+  ));
+}
+*/
+
+// --- 홈 화면 ---
+class HomeScreen extends StatelessWidget {
+  // 샘플 데이터
+  final List<Map<String, String>> todayList = [
+    {
+      "image": "assets/images/dior.jpg",
+      "title": "크리스챤 디올 성수",
+      "subtitle": "성동구",
+      "rating": "4.5",
+    },
+    {
+      "image": "assets/images/DR.jpg",
+      "title": "대림창고 갤러리",
+      "subtitle": "성동구",
+      "rating": "4.1",
+    },
+    {
+      "image": "assets/images/onion.jpeg",
+      "title": "어니언 성수",
+      "subtitle": "성동구",
+      "rating": "4.3",
+    },
+  ];
+
+  final List<Map<String, String>> courseList = [
+    {
+      "image": "assets/images/inside.jpeg",
+      "title": "실내 놀거리",
+    },
+    {
+      "image": "assets/images/walk.jpg",
+      "title": "고궁 산책",
+    },
+    {
+      "image": "assets/images/cafe.jpeg",
+      "title": "카페 투어",
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final double statusBar = MediaQuery.of(context).padding.top;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          // 상단 SafeArea + 커스텀바
+          Container(
+            padding: EdgeInsets.only(top: statusBar + 10, left: 20, right: 20, bottom: 6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("RECKING", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, letterSpacing: 2)),
+                Icon(Icons.search, size: 32),
+              ],
+            ),
+          ),
+          // 메인 상단 이미지 (사진은 예시)
+          Container(
+            width: double.infinity,
+            height: screenHeight * 0.23,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/redbutton.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 16,
+                  bottom: 18,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("재미가 필요하다면?", style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600, shadows: [Shadow(color: Colors.black, blurRadius: 6)])),
+                      Text("레드버튼 성수점", style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold, shadows: [Shadow(color: Colors.black, blurRadius: 8)])),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // 아래 흰색 영역 (rounded top corners)
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+              ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // 오늘의 놀거리
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Text("오늘의 놀거리 ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
+                                Text("😎", style: TextStyle(fontSize: 18)),
+                              ],
+                            ),
+                            Text("전체보기 >", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.grey[700])),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 13),
+                      Container(
+                        height: 200,
+                        child: ListView.separated(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: todayList.length,
+                          separatorBuilder: (context, idx) => SizedBox(width: 16),
+                          itemBuilder: (context, idx) {
+                            final item = todayList[idx];
+                            return _todayCard(item);
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      // 추천 코스
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Text("추천 코스 ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
+                                Text("🔥", style: TextStyle(fontSize: 18)),
+                              ],
+                            ),
+                            Text("전체보기 >", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.grey[700])),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 13),
+                      Container(
+                        height: 160,
+                        child: ListView.separated(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: courseList.length,
+                          separatorBuilder: (context, idx) => SizedBox(width: 16),
+                          itemBuilder: (context, idx) {
+                            final item = courseList[idx];
+                            return _courseCard(item);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      // 하단 네비게이션바
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey[400],
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        onTap: (idx) {
+          if (idx == 1) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => CommunityHomePage())
+            );
+          }
+        },
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "홈"),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: "커뮤니티"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "내 일정"),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: "북마크"),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "마이페이지"),
+        ],
+      ),
+    );
+  }
+
+  // 오늘의 놀거리 카드 위젯 (이미지+하단 오버레이+레이팅)
+  Widget _todayCard(Map<String, String> item) {
+    return Container(
+      width: 160,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        image: DecorationImage(
+          image: NetworkImage(item["image"] ?? ""),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          // 레이팅
+          Positioned(
+            top: 13,
+            right: 13,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.65),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.star, color: Colors.yellow[400], size: 17),
+                  SizedBox(width: 2),
+                  Text(item["rating"] ?? "", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+                ],
+              ),
+            ),
+          ),
+          // 하단 텍스트
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(14, 0, 14, 16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [Colors.black.withOpacity(0.72), Colors.transparent],
+                ),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 26),
+                  Text(
+                    item["title"] ?? "",
+                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    item["subtitle"] ?? "",
+                    style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 추천 코스 카드 위젯 (이미지+하단 오버레이)
+  Widget _courseCard(Map<String, String> item) {
+    return Container(
+      width: 140,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        image: DecorationImage(
+          image: NetworkImage(item["image"] ?? ""),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          // 하단 텍스트 오버레이
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(14, 0, 14, 18),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [Colors.black.withOpacity(0.75), Colors.transparent],
+                ),
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
+              ),
+              child: Text(
+                item["title"] ?? "",
+                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// --- 커뮤니티 페이지 ---
 class CommunityHomePage extends StatelessWidget {
   const CommunityHomePage({super.key});
 
@@ -25,8 +337,6 @@ class CommunityHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
-
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: AppBar(
@@ -54,7 +364,6 @@ class CommunityHomePage extends StatelessWidget {
           ],
         ),
       ),
-
       body: Column(
         children: [
           _buildStoryList(),
@@ -62,7 +371,6 @@ class CommunityHomePage extends StatelessWidget {
           Expanded(child: _buildPostList()),
         ],
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -78,68 +386,44 @@ class CommunityHomePage extends StatelessWidget {
           ),
         ),
       ),
-
-
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.only(bottom: 16),
-        color: Colors.white,
-        child: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: 0,
-          selectedFontSize: 9,
-          unselectedFontSize: 9,
-          selectedItemColor: Colors.black87,
-          unselectedItemColor: Colors.grey[600],
-          items: const [
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  Icon(Icons.home, size: 22),
-                  SizedBox(height: 2),
-                ],
-              ),
-              label: '홈',
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  Icon(Icons.group, size: 22),
-                  SizedBox(height: 2),
-                ],
-              ),
-              label: '커뮤니티',
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  Icon(Icons.calendar_today, size: 22),
-                  SizedBox(height: 2),
-                ],
-              ),
-              label: '내 일정',
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  Icon(Icons.bookmark, size: 22),
-                  SizedBox(height: 2),
-                ],
-              ),
-              label: '북마크',
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  Icon(Icons.person, size: 22),
-                  SizedBox(height: 2),
-                ],
-              ),
-              label: '마이페이지',
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: 1,
+        selectedFontSize: 9,
+        unselectedFontSize: 9,
+        selectedItemColor: Colors.black87,
+        unselectedItemColor: Colors.grey[600],
+        onTap: (idx) {
+          if (idx == 0) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => HomeScreen())
+            );
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, size: 22),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.group, size: 22),
+            label: '커뮤니티',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today, size: 22),
+            label: '내 일정',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark, size: 22),
+            label: '북마크',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, size: 22),
+            label: '마이페이지',
+          ),
+        ],
       ),
     );
   }
