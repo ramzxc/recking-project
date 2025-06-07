@@ -30,14 +30,14 @@ Recking/
 
 ### 1️⃣ PostgreSQL 설치 및 DB 생성
 ```bash
-createdb playmaking
+createdb recking
 ```
 
 ### 2️⃣ `.env` 파일 만들기 (예시: `backend/.env`)
 ```env
 DB_USER=postgres
 DB_HOST=localhost
-DB_NAME=playmaking
+DB_NAME=recking
 DB_PASSWORD=your_password
 DB_PORT=5432
 PORT=5000
@@ -52,8 +52,12 @@ node index.js
 
 ### 4️⃣ 데이터베이스 테이블 생성
 ```bash
-psql -U postgres -d playmaking -f setup/schema.sql
+psql -U postgres -d recking -f setup/schema.sql
 ```
+# (선택) 더미 데이터 입력
+psql -U postgres -d recking -f setup/seed.sql
+
+# schema.sql과 seed.sql은 같은 데이터베이스에 적용해야 합니다.
 
 ---
 
