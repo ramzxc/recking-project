@@ -56,6 +56,8 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: _buildBottomBar(context),
+
+      floatingActionButton: const FloatingMenuButton(),
     );
   }
 
@@ -276,6 +278,63 @@ class HomeScreen extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: "북마크"),
         BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "마이페이지"),
       ],
+    );
+  }
+}
+
+class FloatingMenuButton extends StatefulWidget {
+  const FloatingMenuButton({super.key});
+
+  @override
+  State<FloatingMenuButton> createState() => _FloatingMenuButtonState();
+}
+
+class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTickerProviderStateMixin {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        if (_isExpanded) ...[
+          _buildMiniButton("MBTI"),
+          const SizedBox(height: 10),
+          _buildMiniButton("MOOD"),
+          const SizedBox(height: 10),
+        ],
+        FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              _isExpanded = !_isExpanded;
+            });
+          },
+          backgroundColor: Colors.orange,
+          child: const Icon(Icons.menu),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMiniButton(String label) {
+    return FloatingActionButton.extended(
+      heroTag: label,
+      onPressed: () {
+        if (label == "MBTI") {
+          Navigator.of(context).pushNamed('/mbti'); // ✅ 화면 이동
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$label 버튼 눌림')));
+        }
+      },
+      label: Text(label,
+          style: const TextStyle(
+            color: Colors.orange,
+            fontWeight: FontWeight.bold,
+          )),
+      backgroundColor: Colors.white,
+      icon: const Icon(Icons.circle, color: Colors.orange, size: 12),
+      elevation: 2,
     );
   }
 }

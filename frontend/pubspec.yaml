@@ -60,13 +60,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/dior.jpg
-    - assets/images/DR.jpg
-    - assets/images/onion.jpeg
-    - assets/images/redbutton.png
-    - assets/images/cafe.jpg
-    - assets/images/inside.jpeg
-    - assets/images/walk.jpeg
+    - assets/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
