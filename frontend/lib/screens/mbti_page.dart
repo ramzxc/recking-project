@@ -71,20 +71,28 @@ class _MbtiPageState extends State<MbtiPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: '커뮤니티'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), label: '내 일정'),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: '북마크'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이페이지'),
-        ],
-      ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() => _currentIndex = index);
+            if (index == 0) {
+              Navigator.of(context).pushReplacementNamed('/'); // 홈
+            } else if (index == 1) {
+              Navigator.of(context).pushReplacementNamed('/community'); // 커뮤니티
+            }
+            // index 2~4는 아직 페이지 없으면 생략 가능
+          },
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
+            BottomNavigationBarItem(icon: Icon(Icons.people), label: '커뮤니티'),
+            BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), label: '내 일정'),
+            BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: '북마크'),
+            BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이페이지'),
+          ],
+        )
     );
   }
 

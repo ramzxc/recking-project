@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
     },
     {
       "image": "assets/images/walk.jpg",
-      "title": "고궁 산책",
+      "title": "성수 산책",
     },
     {
       "image": "assets/images/cafe.jpeg",
@@ -151,7 +151,7 @@ class HomeScreen extends StatelessWidget {
         separatorBuilder: (context, idx) => const SizedBox(width: 16),
         itemBuilder: (context, idx) {
           final item = dataList[idx];
-          return showRating ? _todayCard(item) : _courseCard(item);
+          return showRating ? _todayCard(item) : _courseCard(context, item);
         },
       ),
     );
@@ -193,39 +193,48 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _courseCard(Map<String, String> item) {
-    return Container(
-      width: 140,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
-        image: DecorationImage(
-          image: NetworkImage(item["image"] ?? ""),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(14, 0, 14, 18),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [Colors.black.withOpacity(0.75), Colors.transparent],
-                ),
-                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
-              ),
-              child: Text(item["title"] ?? "", style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
+  Widget _courseCard(BuildContext context, Map<String, String> item) {
+    return GestureDetector(
+      onTap: () {
+        if (item["title"] == "성수 산책") {
+          Navigator.of(context).pushNamed('/course');
+        }
+      },
+      child: Container(
+        width: 140,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(28),
+          image: DecorationImage(
+            image: AssetImage(item["image"] ?? ""),
+            fit: BoxFit.cover,
           ),
-        ],
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(14, 0, 14, 18),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [Colors.black.withOpacity(0.75), Colors.transparent],
+                  ),
+                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
+                ),
+                child: Text(item["title"] ?? "", style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
+
 
   Widget _cardTextOverlay(String? title, String? subtitle) {
     return Positioned(

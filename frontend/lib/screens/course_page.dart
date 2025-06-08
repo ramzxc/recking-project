@@ -106,6 +106,14 @@ class CourseDetailPage extends StatelessWidget {
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.of(context).pushReplacementNamed('/'); // 홈
+          } else if (index == 1) {
+            Navigator.of(context).pushReplacementNamed('/community'); // 커뮤니티
+          }
+          // 필요 시 index 2~4도 확장 가능
+        },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: '커뮤니티'),
@@ -114,6 +122,7 @@ class CourseDetailPage extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이페이지'),
         ],
       ),
+
     );
   }
 
