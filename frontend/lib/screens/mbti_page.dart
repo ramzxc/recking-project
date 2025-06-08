@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import '../services/api_service.dart';
+import '../models/place.dart';
 
 class MbtiPage extends StatefulWidget {
   const MbtiPage({super.key});
@@ -10,6 +12,7 @@ class MbtiPage extends StatefulWidget {
 
 class _MbtiPageState extends State<MbtiPage> {
   String? selectedMbti;
+  List<Place> mbtiPlaces = [];
 
   final List<String> mbtiTypes = [
     'ISTJ', 'ISFJ', 'INFJ', 'INTJ',
@@ -18,16 +21,14 @@ class _MbtiPageState extends State<MbtiPage> {
     'ESTJ', 'ESFJ', 'ENFJ', 'ENTJ',
   ];
 
-  final List<Map<String, String>> places = [
-    {'title': '서울 시립 미술관', 'image': 'assets/images/seoul_museum.png'},
-    {'title': '정동길', 'image': 'assets/images/jungdonggil.png'},
-    {'title': '서점 리스본', 'image': 'assets/images/bookstore.png'},
-    {'title': '모키 문래', 'image': 'assets/images/moki.png'},
-    {'title': '로매지크', 'image': 'assets/images/leaumagique.png'},
-    {'title': '텅플래닛', 'image': 'assets/images/tongueplanet.png'},
-  ];
-
   final int _currentIndex = 2;
+
+  void _loadMbtiPlaces(String type) async {
+    final data = await ApiService.fetchMbtiPlaces(type);
+    setState(() {
+      mbtiPlaces = data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class _MbtiPageState extends State<MbtiPage> {
                     selected: isSelected,
                     onSelected: (_) {
                       setState(() => selectedMbti = type);
+                      _loadMbtiPlaces(type);
                     },
                     selectedColor: Colors.cyan[200],
                     backgroundColor: Colors.grey[200],
@@ -73,7 +75,6 @@ class _MbtiPageState extends State<MbtiPage> {
         ],
       ),
       bottomNavigationBar: const CustomBottomNavBar(currentIndex: null),
-
     );
   }
 
@@ -105,7 +106,7 @@ class _MbtiPageState extends State<MbtiPage> {
       crossAxisSpacing: 6,
       mainAxisSpacing: 8,
       childAspectRatio: 1,
-      children: places.map((place) {
+      children: mbtiPlaces.map((place) {
         return Card(
           elevation: 4,
           shape: RoundedRectangleBorder(
@@ -115,15 +116,17 @@ class _MbtiPageState extends State<MbtiPage> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(
-                place['image']!,
+              Image.network(
+                place.image,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.broken_image, size: 48),
               ),
               Positioned(
                 left: 8,
                 bottom: 8,
                 child: Text(
-                  place['title']!,
+                  place.title,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
