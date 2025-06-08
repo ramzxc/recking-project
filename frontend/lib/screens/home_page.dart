@@ -1,46 +1,44 @@
 // lib/screens/home_page.dart
 import 'package:flutter/material.dart';
-import 'community_page.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import '../services/api_service.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  final List<Map<String, String>> todayList = const [
-    {
-      "image": "assets/images/dior.jpg",
-      "title": "크리스챤 디올 성수",
-      "subtitle": "성동구",
-      "rating": "4.5",
-    },
-    {
-      "image": "assets/images/DR.jpg",
-      "title": "대림창고 갤러리",
-      "subtitle": "성동구",
-      "rating": "4.1",
-    },
-    {
-      "image": "assets/images/onion.jpeg",
-      "title": "어니언 성수",
-      "subtitle": "성동구",
-      "rating": "4.3",
-    },
-  ];
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-  final List<Map<String, String>> courseList = const [
-    {
-      "image": "assets/images/inside.jpeg",
-      "title": "실내 놀거리",
-    },
-    {
-      "image": "assets/images/walk.jpg",
-      "title": "성수 산책",
-    },
-    {
-      "image": "assets/images/cafe.jpeg",
-      "title": "카페 투어",
-    },
-  ];
+class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, dynamic>> todayList = [];
+  List<Map<String, dynamic>> courseList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTodayList();
+    _loadCourseList();
+  }
+
+  Future<void> _loadTodayList() async {
+    final data = await ApiService.fetchTodayPlaces();
+    setState(() {
+      todayList = data.map((place) => {
+        'image': place.image,
+        'title': place.title,
+        'subtitle': place.subtitle,
+        'rating': place.rating,
+      }).toList();
+    });
+  }
+
+  Future<void> _loadCourseList() async {
+    final data = await ApiService.fetchCourseList();
+      setState(() {
+      courseList = data;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +54,7 @@ class HomeScreen extends StatelessWidget {
           Expanded(child: _buildScrollableContent(context)),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(currentIndex: 0),
-
+      bottomNavigationBar: const CustomBottomNavBar(currentIndex: 0),
       floatingActionButton: const FloatingMenuButton(),
     );
   }
@@ -142,7 +139,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHorizontalList(List<Map<String, String>> dataList, bool showRating) {
+  Widget _buildHorizontalList(List<dynamic> dataList, bool showRating) {
     return SizedBox(
       height: showRating ? 200 : 160,
       child: ListView.separated(
@@ -158,7 +155,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _todayCard(Map<String, String> item) {
+  Widget _todayCard(Map<String, dynamic> item) {
     return Container(
       width: 160,
       decoration: BoxDecoration(
@@ -194,10 +191,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _courseCard(BuildContext context, Map<String, String> item) {
+  Widget _courseCard(BuildContext context, Map<String, dynamic> item) {
     return GestureDetector(
       onTap: () {
-        if (item["title"] == "성수 산책") {
+        if (item["title"]?.toString() == "성수 산책") {
           Navigator.of(context).pushNamed('/course');
         }
       },
@@ -206,7 +203,7 @@ class HomeScreen extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
           image: DecorationImage(
-            image: AssetImage(item["image"] ?? ""),
+            image: NetworkImage(item["image"]?.toString() ?? ""),
             fit: BoxFit.cover,
           ),
         ),
@@ -226,7 +223,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
                 ),
-                child: Text(item["title"] ?? "", style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                child: Text(
+                  item["title"]?.toString() ?? "",
+                  style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
@@ -234,7 +234,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
 
 
   Widget _cardTextOverlay(String? title, String? subtitle) {
@@ -265,8 +264,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
 
 class FloatingMenuButton extends StatefulWidget {
@@ -337,13 +334,13 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
     }
 
     return FloatingActionButton(
-      heroTag: 'fab_$label',
+      heroTag: 'fab_\$label',
       onPressed: () {
         if (label == "MBTI") {
           Navigator.of(context).pushNamed('/mbti');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('$label 버튼 눌림')),
+            SnackBar(content: Text('\$label 버튼 눌림')),
           );
         }
       },
@@ -352,14 +349,14 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.all(6), // 버튼 내부 패딩
+        padding: const EdgeInsets.all(6),
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
         ),
         child: Image.asset(
           imagePath,
-          fit: BoxFit.fitWidth, // 너비만 맞추고 세로는 유지
+          fit: BoxFit.fitWidth,
           alignment: Alignment.center,
           errorBuilder: (context, error, stackTrace) {
             return const Icon(Icons.image, color: Colors.orange);
@@ -369,4 +366,3 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
     );
   }
 }
-

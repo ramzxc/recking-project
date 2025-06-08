@@ -27,7 +27,7 @@ class _MbtiPageState extends State<MbtiPage> {
     {'title': '텅플래닛', 'image': 'assets/images/tongueplanet.png'},
   ];
 
-  int _currentIndex = 2;
+  final int _currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {

@@ -87,7 +87,7 @@ class CourseDetailPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Center(
+                      const Center(
                         child: Text(
                           '10명이 이 일정을 탐방했습니다.',
                           style: TextStyle(fontSize: 12, color: Colors.grey),
