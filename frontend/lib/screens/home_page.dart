@@ -310,31 +310,76 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
               _isExpanded = !_isExpanded;
             });
           },
-          backgroundColor: Colors.orange,
-          child: const Icon(Icons.menu),
+          backgroundColor: Colors.white,
+          shape: const CircleBorder(),
+          child: ClipOval(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              padding: const EdgeInsets.all(6),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: Image.asset(
+                "assets/icons/menu_icon.jpg",
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.center,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(Icons.menu, color: Colors.white);
+                },
+              ),
+            ),
+          )
         ),
       ],
     );
   }
 
   Widget _buildMiniButton(String label) {
-    return FloatingActionButton.extended(
-      heroTag: label,
+    String imagePath;
+    switch (label) {
+      case "MBTI":
+        imagePath = "assets/icons/mbti_icon.jpg";
+        break;
+      case "MOOD":
+        imagePath = "assets/icons/mood_icon.jpg";
+        break;
+      default:
+        imagePath = "";
+    }
+
+    return FloatingActionButton(
+      heroTag: 'fab_$label',
       onPressed: () {
         if (label == "MBTI") {
-          Navigator.of(context).pushNamed('/mbti'); // ✅ 화면 이동
+          Navigator.of(context).pushNamed('/mbti');
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$label 버튼 눌림')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('$label 버튼 눌림')),
+          );
         }
       },
-      label: Text(label,
-          style: const TextStyle(
-            color: Colors.orange,
-            fontWeight: FontWeight.bold,
-          )),
       backgroundColor: Colors.white,
-      icon: const Icon(Icons.circle, color: Colors.orange, size: 12),
-      elevation: 2,
+      shape: const CircleBorder(),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        padding: const EdgeInsets.all(6), // 버튼 내부 패딩
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+        child: Image.asset(
+          imagePath,
+          fit: BoxFit.fitWidth, // 너비만 맞추고 세로는 유지
+          alignment: Alignment.center,
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(Icons.image, color: Colors.orange);
+          },
+        ),
+      ),
     );
   }
 }
+
