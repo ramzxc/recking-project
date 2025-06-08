@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
+      routes: {
+        '/mbti': (context) => const MbtiPage(),
+      },
     );
   }
 }

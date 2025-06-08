@@ -12,30 +12,19 @@ class _MbtiPageState extends State<MbtiPage> {
 
   final List<String> mbtiTypes = [
     'ISTJ', 'ISFJ', 'INFJ', 'INTJ',
-    'ISTP', 'ISFP', 'ESTJ', 'ESFJ',
-    'ENTJ', 'ENFJ', 'ESFP', 'ESFJ',
-    'INFP', 'ISFJ', 'ENTP', 'ENFP',
+    'ISTP', 'ISFP', 'INFP', 'INTP',
+    'ESTP', 'ESFP', 'ENFP', 'ENTP',
+    'ESTJ', 'ESFJ', 'ENFJ', 'ENTJ',
   ];
-
-  // final List<Map<String, String>> places = [
-  //   {'title': '서울 시립 미술관', 'image': 'assets/images/seoul_museum.png'},
-  //   {'title': '정동길', 'image': 'assets/images/jungdonggil.png'},
-  //   {'title': '서점 리스본', 'image': 'assets/images/bookstore.png'},
-  //   {'title': '모키 문래', 'image': 'assets/images/moki.png'},
-  //   {'title': '로매지크', 'image': 'assets/images/leaumagique.png'},
-  //   {'title': '텅플래닛', 'image': 'assets/images/tongueplanet.png'},
-  // ];
 
   final List<Map<String, String>> places = [
-    {'title': '서울 시립 미술관', 'image': ''},
-    {'title': '정동길', 'image': ''},
-    {'title': '서점 리스본', 'image': ''},
-    {'title': '모키 문래', 'image': ''},
-    {'title': '로매지크', 'image': ''},
-    {'title': '텅플래닛', 'image': ''},
+    {'title': '서울 시립 미술관', 'image': 'assets/images/seoul_museum.png'},
+    {'title': '정동길', 'image': 'assets/images/jungdonggil.png'},
+    {'title': '서점 리스본', 'image': 'assets/images/bookstore.png'},
+    {'title': '모키 문래', 'image': 'assets/images/moki.png'},
+    {'title': '로매지크', 'image': 'assets/images/leaumagique.png'},
+    {'title': '텅플래닛', 'image': 'assets/images/tongueplanet.png'},
   ];
-
-
 
   int _currentIndex = 2;
 
@@ -44,11 +33,12 @@ class _MbtiPageState extends State<MbtiPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('MBTI'),
+        title: const Text('MBTI', style: TextStyle(color: Colors.black)),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context), // 뒤로가기 동작
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
         ),
+        elevation: 1,
       ),
       body: Column(
         children: [
@@ -129,25 +119,17 @@ class _MbtiPageState extends State<MbtiPage> {
       children: places.map((place) {
         return Card(
           elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           clipBehavior: Clip.antiAlias,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              // Image.asset(
-              //   place['image']!,
-              //   fit: BoxFit.cover,
-              // ),
-              (place['image'] != null && place['image']!.isNotEmpty)
-                  ? Image.asset(
+              Image.asset(
                 place['image']!,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return _placeholderImage();
-                },
-              )
-                  : _placeholderImage(),
-
+              ),
               Positioned(
                 left: 8,
                 bottom: 8,
@@ -157,6 +139,7 @@ class _MbtiPageState extends State<MbtiPage> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
+                    shadows: [Shadow(color: Colors.black, blurRadius: 6)],
                   ),
                 ),
               ),
@@ -166,13 +149,4 @@ class _MbtiPageState extends State<MbtiPage> {
       }).toList(),
     );
   }
-  Widget _placeholderImage() {
-    return Container(
-      color: Colors.grey[200],
-      child: const Center(
-        child: Icon(Icons.image, color: Colors.grey, size: 40),
-      ),
-    );
-  }
 }
-
