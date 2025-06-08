@@ -1,6 +1,7 @@
 // lib/screens/home_page.dart
 import 'package:flutter/material.dart';
 import 'community_page.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -55,7 +56,7 @@ class HomeScreen extends StatelessWidget {
           Expanded(child: _buildScrollableContent(context)),
         ],
       ),
-      bottomNavigationBar: _buildBottomBar(context),
+      bottomNavigationBar: CustomBottomNavBar(currentIndex: 0),
 
       floatingActionButton: const FloatingMenuButton(),
     );
@@ -265,30 +266,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomBar(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: 0,
-      selectedItemColor: Colors.black,
-      unselectedItemColor: Colors.grey[400],
-      showSelectedLabels: true,
-      showUnselectedLabels: true,
-      type: BottomNavigationBarType.fixed,
-      onTap: (idx) {
-        if (idx == 1) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const CommunityHomePage()),
-          );
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "홈"),
-        BottomNavigationBarItem(icon: Icon(Icons.group), label: "커뮤니티"),
-        BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "내 일정"),
-        BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: "북마크"),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "마이페이지"),
-      ],
-    );
-  }
+
 }
 
 class FloatingMenuButton extends StatefulWidget {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
 
 class CourseDetailPage extends StatelessWidget {
   CourseDetailPage({super.key});
 
-  final String mapImage = 'assets/map.png'; // 지도 이미지 경로
+  final String mapImage = 'assets/images/map.png'; // 지도 이미지 경로
 
   final List<Map<String, String>> places = [
     {'name': '서울숲', 'address': '서울 성동구 뚝섬로 273'},
@@ -101,27 +102,8 @@ class CourseDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.of(context).pushReplacementNamed('/'); // 홈
-          } else if (index == 1) {
-            Navigator.of(context).pushReplacementNamed('/community'); // 커뮤니티
-          }
-          // 필요 시 index 2~4도 확장 가능
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: '커뮤니티'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), label: '내 일정'),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: '북마크'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이페이지'),
-        ],
-      ),
+        bottomNavigationBar: const CustomBottomNavBar(currentIndex: null),
+
 
     );
   }

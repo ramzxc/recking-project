@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/post.dart';
 import '../services/api_service.dart';
 import 'home_page.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
+
 
 class CommunityHomePage extends StatefulWidget {
   const CommunityHomePage({super.key});
@@ -97,30 +99,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
           child: const Icon(Icons.edit, size: 18, color: Colors.orangeAccent),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 1,
-        selectedFontSize: 9,
-        unselectedFontSize: 9,
-        selectedItemColor: Colors.black87,
-        unselectedItemColor: Colors.grey[600],
-        onTap: (idx) {
-          if (idx == 0) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => const HomeScreen()),
-            );
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home, size: 22), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.group, size: 22), label: '커뮤니티'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today, size: 22), label: '내 일정'),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark, size: 22), label: '북마크'),
-          BottomNavigationBarItem(icon: Icon(Icons.person, size: 22), label: '마이페이지'),
-        ],
-      ),
+      bottomNavigationBar: const CustomBottomNavBar(currentIndex: 1),
     );
   }
 
