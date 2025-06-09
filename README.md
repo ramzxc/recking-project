@@ -76,7 +76,7 @@ flutter pub get
 
 ### 3️⃣ 앱 실행 (웹)
 ```bash
-flutter run -d chrome
+flutter run -d chrome --web-port=5173
 ```
 
 > ⚠️ 에러 발생 시 `flutter doctor`로 개발 환경 점검하세요.

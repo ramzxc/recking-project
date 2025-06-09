@@ -3,11 +3,13 @@
 /backend/.env
 /backend/build/
 
+
 # Flutter frontend
 /frontend/build/
 /frontend/.dart_tool/
 /frontend/.idea/
 /frontend/.packages
+/frontend/lib/APIKEY.dart
 
 # OS and editor junk
 .DS_Store
