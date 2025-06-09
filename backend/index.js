@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path"); // ✅ 추가
+const path = require("path"); 
 const pool = require("./db/pool");
 const activityRoutes = require("./routes/activities");
 const userRoutes = require("./routes/users");
@@ -8,6 +8,8 @@ const favoriteRoutes = require("./routes/favorites");
 const postRoutes = require("./routes/posts"); 
 const todayRoutes = require("./routes/today");
 const courseRoutes = require('./routes/courses'); 
+const mbtiRouter = require('./routes/mbti');
+const courseRouter = require('./routes/course');
 
 require("dotenv").config();
 
@@ -25,6 +27,8 @@ app.use("/favorites", favoriteRoutes);
 app.use("/posts", postRoutes); 
 app.use("/today", todayRoutes); 
 app.use('/courses', courseRoutes);  
+app.use('/mbti', mbtiRouter);
+app.use('/course', courseRouter);
 
 app.get("/", async (req, res) => {
   try {

@@ -4,9 +4,10 @@ import 'screens/community_page.dart';
 import 'screens/home_page.dart';
 import 'screens/mbti_page.dart';
 import 'screens/course_page.dart';
+import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/community': (context) => const CommunityHomePage(), // 커뮤니티
-        '/course': (context) => CourseDetailPage(),
+        '/course': (context) => CourseDetailPage(courseId: '1'),
         '/mbti': (context) => const MbtiPage(),
       },
     );
