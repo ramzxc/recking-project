@@ -4,7 +4,8 @@ import 'screens/community_page.dart';
 import 'screens/home_page.dart';
 import 'screens/mbti_page.dart';
 import 'screens/course_page.dart';
-import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
+// import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(MyApp());
