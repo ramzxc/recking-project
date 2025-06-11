@@ -93,7 +93,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
         padding: const EdgeInsets.only(bottom: 20),
         child: FloatingActionButton(
           onPressed: () {},
-          mini: true,
+          // mini: true,
           shape: const CircleBorder(),
           backgroundColor: Colors.white,
           child: const Icon(Icons.edit, size: 18, color: Colors.orangeAccent),
@@ -105,22 +105,27 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
 
   Widget _buildStoryList() {
     return SizedBox(
-      height: 90,
+      //height: 90,
+      height: 115,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 10,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            //padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
                 CircleAvatar(
-                  radius: 24,
+                  //radius: 24,
+                  radius: 30,
                   backgroundColor: Colors.grey[200],
                   child: const Icon(Icons.person, size: 20, color: Colors.orangeAccent),
                 ),
-                const SizedBox(height: 4),
-                Text('user\$index', style: const TextStyle(fontSize: 10)),
+                //const SizedBox(height: 4),
+                const SizedBox(height: 8),
+                //Text('user\$index', style: const TextStyle(fontSize: 10)),
+                Text('user\$index', style: const TextStyle(fontSize: 13)),
               ],
             ),
           );
