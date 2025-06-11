@@ -65,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("RECKING", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, letterSpacing: 2)),
+          //Text("RECKING", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, letterSpacing: 2)),
+          Text("유희왕", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, letterSpacing: 2)),
           Icon(Icons.search, size: 32),
         ],
       ),
