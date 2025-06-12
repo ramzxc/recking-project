@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'screens/community_page.dart';
 import 'screens/home_page.dart';
-// import 'screens/mbti_page.dart';
+import 'screens/mbti_page.dart';
 import 'screens/course_page.dart';
 // import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/community': (context) => const CommunityHomePage(), // 커뮤니티
         '/course': (context) => CourseDetailPage(),
-        // '/mbti': (context) => const MbtiPage(),
+        '/mbti': (context) => const MbtiPage(),
       },
     );
   }
