@@ -38,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     },
     {
       'image': 'assets/images/home/image8.png',
-      'title': '고궁 산책',
-      'subtitle': '고궁 산책',
+      'title': '성수 산책',
+      'subtitle': '성수 산책',
     },
     {
       'image': 'assets/images/home/image6.png',
