@@ -5,7 +5,7 @@ import 'screens/home_page.dart';
 import 'screens/mbti_page.dart';
 import 'screens/course_page.dart';
 // import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/community': (context) => const CommunityHomePage(), // 커뮤니티
-        '/course': (context) => CourseDetailPage(courseId: '1'),
+        '/course': (context) => CourseDetailPage(),
         '/mbti': (context) => const MbtiPage(),
       },
     );
