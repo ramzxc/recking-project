@@ -1,7 +1,5 @@
-// lib/screens/home_page.dart
 import 'package:flutter/material.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
-import '../services/api_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,34 +9,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Map<String, dynamic>> todayList = [];
-  List<Map<String, dynamic>> courseList = [];
+  List<Map<String, dynamic>> todayList = [
+    {
+      'image': 'assets/images/home/image1.png',
+      'title': '크리스챤 디올 성수',
+      'subtitle': '성동구',
+      'rating': '4.5',
+    },
+    {
+      'image': 'assets/images/home/image2.png',
+      'title': '대림창고 갤러리',
+      'subtitle': '성동구',
+      'rating': '4.1',
+    },
+    {
+      'image': 'assets/images/home/image3.png',
+      'title': '어니언 성수',
+      'subtitle': '성동구',
+      'rating': '4.3',
+    },
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _loadTodayList();
-    _loadCourseList();
-  }
-
-  Future<void> _loadTodayList() async {
-    final data = await ApiService.fetchTodayPlaces();
-    setState(() {
-      todayList = data.map((place) => {
-        'image': place.image,
-        'title': place.title,
-        'subtitle': place.subtitle,
-        'rating': place.rating,
-      }).toList();
-    });
-  }
-
-  Future<void> _loadCourseList() async {
-    final data = await ApiService.fetchCourseList();
-      setState(() {
-      courseList = data;
-      });
-  }
+  List<Map<String, dynamic>> courseList = [
+    {
+      'image': 'assets/images/home/image4.png',
+      'title': '실내 놀거리',
+      'subtitle': '트렌디 코스',
+    },
+    {
+      'image': 'assets/images/home/image8.png',
+      'title': '고궁 산책',
+      'subtitle': '고궁 산책',
+    },
+    {
+      'image': 'assets/images/home/image6.png',
+      'title': '카페 투어',
+      'subtitle': '카페 투어',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          //Text("RECKING", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, letterSpacing: 2)),
           Text("유희왕", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, letterSpacing: 2)),
           Icon(Icons.search, size: 32),
         ],
@@ -162,7 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
         image: DecorationImage(
-          image: NetworkImage(item["image"] ?? ""),
+          image: item["image"].toString().startsWith('assets/')
+              ? AssetImage(item["image"]) as ImageProvider
+              : NetworkImage(item["image"] ?? ""),
           fit: BoxFit.cover,
         ),
       ),
@@ -204,7 +213,9 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
           image: DecorationImage(
-            image: NetworkImage(item["image"]?.toString() ?? ""),
+            image: item["image"].toString().startsWith('assets/')
+                ? AssetImage(item["image"]) as ImageProvider
+                : NetworkImage(item["image"] ?? ""),
             fit: BoxFit.cover,
           ),
         ),
@@ -235,7 +246,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
   Widget _cardTextOverlay(String? title, String? subtitle) {
     return Positioned(
@@ -335,13 +345,13 @@ class _FloatingMenuButtonState extends State<FloatingMenuButton> with SingleTick
     }
 
     return FloatingActionButton(
-      heroTag: 'fab_\$label',
+      heroTag: 'fab_$label',
       onPressed: () {
         if (label == "MBTI") {
           Navigator.of(context).pushNamed('/mbti');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('\$label 버튼 눌림')),
+            SnackBar(content: Text('$label 버튼 눌림')),
           );
         }
       },
