@@ -11,19 +11,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> todayList = [
     {
-      'image': 'assets/images/home/image_1.png',
+      'image': 'assets/images/home/image_1.jpg',
       'title': '크리스챤 디올 성수',
       'subtitle': '성동구',
       'rating': '4.5',
     },
     {
-      'image': 'assets/images/home/image_2.png',
+      'image': 'assets/images/home/image_2.jpg',
       'title': '대림창고 갤러리',
       'subtitle': '성동구',
       'rating': '4.1',
     },
     {
-      'image': 'assets/images/home/image_3.png',
+      'image': 'assets/images/home/image_3.jpg',
       'title': '어니언 성수',
       'subtitle': '성동구',
       'rating': '4.3',
@@ -32,17 +32,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Map<String, dynamic>> courseList = [
     {
-      'image': 'assets/images/home/image_4.png',
+      'image': 'assets/images/home/image_4.jpg',
       'title': '실내 놀거리',
       'subtitle': '트렌디 코스',
     },
     {
-      'image': 'assets/images/home/image_8.png',
+      'image': 'assets/images/home/image_5.jpg',
       'title': '성수 산책',
       'subtitle': '성수 산책',
     },
     {
-      'image': 'assets/images/home/image_6.png',
+      'image': 'assets/images/home/image_6.jpg',
       'title': '카페 투어',
       'subtitle': '카페 투어',
     },
