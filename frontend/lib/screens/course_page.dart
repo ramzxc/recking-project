@@ -1,77 +1,34 @@
-// lib/screens/course_page.dart
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../models/place.dart';
-import '../services/api_service.dart';
-import '../widgets/custom_bottom_nav_bar.dart';
 
-class CourseDetailPage extends StatefulWidget {
-  final String courseId;
+class CourseDetailPage extends StatelessWidget {
+  CourseDetailPage({super.key});
 
-  const CourseDetailPage({super.key, required this.courseId});
+  final String mapImage = 'assets/images/map.png'; // 지도 이미지 경로
 
-  @override
-  State<CourseDetailPage> createState() => _CourseDetailPageState();
-}
-
-class _CourseDetailPageState extends State<CourseDetailPage> {
-  late GoogleMapController mapController;
-  List<Place> places = [];
-  final Set<Marker> _markers = {};
-  final List<LatLng> _polylinePoints = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCourseDetails();
-  }
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-  Future<void> _loadCourseDetails() async {
-    final result = await ApiService.fetchCourseDetail(widget.courseId);
-
-    setState(() {
-      places = result;
-      _markers.addAll(result.map((place) => Marker(
-            markerId: MarkerId(place.title),
-            position: LatLng(place.latitude!, place.longitude!),
-            infoWindow: InfoWindow(title: place.title),
-          )));
-      _polylinePoints.addAll(result.map((place) => LatLng(place.latitude!, place.longitude!)));
-    });
-  }
+  final List<Map<String, String>> places = [
+    {'name': '서울숲', 'address': '서울 성동구 뚝섬로 273'},
+    {'name': '베이크모굴', 'address': '서울 성동구 서울숲2길 17'},
+    {'name': '낫저스트북스', 'address': '서울 성동구 서울숲길 44 3층'},
+    {'name': '라라바스켓', 'address': '서울 성동구 서울숲길 55 1층'},
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(37.5446, 127.0559),
-              zoom: 15.0,
-            ),
-            markers: _markers,
-            polylines: {
-              Polyline(
-                polylineId: const PolylineId('route'),
-                points: _polylinePoints,
-                color: Colors.blue,
-                width: 5,
-              ),
-            },
-            zoomControlsEnabled: false,
-            mapToolbarEnabled: false,
+          // 지도 이미지 배경
+          Image.asset(
+            mapImage,
+            width: 500,
+            height: 270,
+            fit: BoxFit.fill,
           ),
+          // 반투명 흰색 카드
           DraggableScrollableSheet(
             initialChildSize: 0.6,
             minChildSize: 0.4,
-            maxChildSize: 0.9,
+            maxChildSize: 0.8,
             builder: (context, scrollController) {
               return Container(
                 decoration: const BoxDecoration(
@@ -80,27 +37,62 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                 ),
                 child: SingleChildScrollView(
                   controller: scrollController,
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 40,
-                        height: 4,
-                        margin: const EdgeInsets.only(bottom: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.circular(2),
+                      Center(
+                        child: Container(
+                          width: 40,
+                          height: 4,
+                          margin: const EdgeInsets.only(bottom: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[400],
+                            borderRadius: BorderRadius.circular(2),
+                          ),
                         ),
                       ),
-                      const Text('성수 산책', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      const Text('@play_king', style: TextStyle(fontSize: 13, color: Colors.grey)),
+                      const Text(
+                        '성수 산책',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const Text(
+                        '@play_king',
+                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                      ),
                       const SizedBox(height: 30),
                       Column(
-                        children: List.generate(
-                          places.length,
-                          (index) => _buildPlaceItem(index + 1, places[index], index != places.length - 1),
+                        children: List.generate(places.length, (index) {
+                          return _buildPlaceItem(index + 1, places[index], index != places.length - 1);
+                        }),
+                      ),
+                      const SizedBox(height: 20),
+
+                      Center(
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          icon: const Icon(Icons.calendar_today_outlined, color: Colors.white),
+                          label: const Text(
+                            '내 일정으로 담기',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
                       ),
+                      const SizedBox(height: 8),
+                      Center(
+                        child: Text(
+                          '10명이 이 일정을 탐방했습니다.',
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
                     ],
                   ),
                 ),
@@ -113,7 +105,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     );
   }
 
-  Widget _buildPlaceItem(int step, Place place, bool showLine) {
+  Widget _buildPlaceItem(int step, Map<String, String> place, bool showLine) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,9 +114,17 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
             CircleAvatar(
               radius: 16,
               backgroundColor: Colors.orange,
-              child: Text('$step', style: const TextStyle(color: Colors.white)),
+              child: Text(
+                '$step',
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
             ),
-            if (showLine) Container(width: 2, height: 40, color: Colors.orange),
+            if (showLine)
+              Container(
+                width: 2,
+                height: 40,
+                color: Colors.orange,
+              ),
           ],
         ),
         const SizedBox(width: 16),
@@ -134,9 +134,19 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(place.title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                Center(
+                  child: Text(
+                    place['name']!,
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
                 const SizedBox(height: 4),
-                Text(place.address ?? '', style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                Center(
+                  child: Text(
+                    place['address']!,
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ),
                 const SizedBox(height: 10),
               ],
             ),
