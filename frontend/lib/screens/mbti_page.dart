@@ -137,7 +137,12 @@ class _MbtiPageState extends State<MbtiPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text('MBTI'),
-        leading:IconButton(icon:Icon(Icons.arrow_back_ios), onPressed: () {}),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/');
+          },
+        ),
       ),
       body: Column(
         children: [

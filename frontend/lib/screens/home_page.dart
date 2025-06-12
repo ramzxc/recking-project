@@ -204,7 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _courseCard(BuildContext context, Map<String, dynamic> item) {
     return GestureDetector(
       onTap: () {
-        if (item["title"]?.toString() == "성수 산책") {
+        final title = item["title"]?.toString();
+        if (title == "성수 산책" || title == "실내 놀거리" || title == "카페 투어") {
           Navigator.of(context).pushNamed('/course');
         }
       },

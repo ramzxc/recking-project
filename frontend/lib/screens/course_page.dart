@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
 
 class CourseDetailPage extends StatelessWidget {
   CourseDetailPage({super.key});
@@ -101,19 +102,7 @@ class CourseDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: '커뮤니티'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), label: '내 일정'),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: '북마크'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이페이지'),
-        ],
-      ),
+      bottomNavigationBar: CustomBottomNavBar(currentIndex: null),
     );
   }
 

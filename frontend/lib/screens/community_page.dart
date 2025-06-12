@@ -183,7 +183,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
             ],
           ),
           const SizedBox(height: 8),
-          Text(content, style: const TextStyle(fontSize: 11)),
+          Text(content, style: const TextStyle(fontSize: 13)),
           const SizedBox(height: 8),
           GridView.count(
             crossAxisCount: 2,
