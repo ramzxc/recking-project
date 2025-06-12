@@ -11,54 +11,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Map<String, dynamic>> todayList = [
-    {
-      'image': 'assets/images/home/image1.png',
-      'title': '크리스챤 디올 성수',
-      'subtitle': '성동구',
-      'rating': '4.5',
-    },
-    {
-      'image': 'assets/images/home/image2.png',
-      'title': '대림창고 갤러리',
-      'subtitle': '성동구',
-      'rating': '4.1',
-    },
-    {
-      'image': 'assets/images/home/image3.png',
-      'title': '어니언 성수',
-      'subtitle': '성동구',
-      'rating': '4.3',
-    },
-  ];
-
-  List<Map<String, dynamic>> courseList = [
-    {
-      'image': 'assets/images/home/image4.png',
-      'title': '실내 놀거리',
-      'subtitle': '트렌디 코스',
-    },
-    {
-      'image': 'assets/images/home/image8.png',
-      'title': '고궁 산책',
-      'subtitle': '고궁 산책',
-    },
-    {
-      'image': 'assets/images/home/image6.png',
-      'title': '카페 투어',
-      'subtitle': '카페 투어',
-    },
-  ];
-
+  List<Map<String, dynamic>> todayList = [];
+  List<Map<String, dynamic>> courseList = [];
 
   @override
   void initState() {
     super.initState();
-    //_loadTodayList();
-    //_loadCourseList();
+    _loadTodayList();
+    _loadCourseList();
   }
 
-/*
   Future<void> _loadTodayList() async {
     final data = await ApiService.fetchTodayPlaces();
     setState(() {
@@ -77,8 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
       courseList = data;
       });
   }
-*/
-
 
   @override
   Widget build(BuildContext context) {
