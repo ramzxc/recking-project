@@ -11,53 +11,51 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Map<String, dynamic>> todayList = [];
-  List<Map<String, dynamic>> courseList = [];
+  List<Map<String, dynamic>> todayList = [
+    {
+      'image': 'assets/images/home/image1.png',
+      'title': '크리스챤 디올 성수',
+      'subtitle': '성동구',
+      'rating': '4.5',
+    },
+    {
+      'image': 'assets/images/home/image2.png',
+      'title': '대림창고 갤러리',
+      'subtitle': '성동구',
+      'rating': '4.1',
+    },
+    {
+      'image': 'assets/images/home/image3.png',
+      'title': '어니언 성수',
+      'subtitle': '성동구',
+      'rating': '4.3',
+    },
+  ];
+
+  List<Map<String, dynamic>> courseList = [
+    {
+      'image': 'assets/images/home/image4.png',
+      'title': '실내 놀거리',
+      'subtitle': '트렌디 코스',
+    },
+    {
+      'image': 'assets/images/home/image8.png',
+      'title': '고궁 산책',
+      'subtitle': '고궁 산책',
+    },
+    {
+      'image': 'assets/images/home/image6.png',
+      'title': '카페 투어',
+      'subtitle': '카페 투어',
+    },
+  ];
+
 
   @override
   void initState() {
     super.initState();
     //_loadTodayList();
     //_loadCourseList();
-  }
-
-  todayList = [
-      {
-        'image': 'assets/images/home/image1.png',
-        'title': '크리스챤 디올 성수',
-        'subtitle': '성동구',
-        'rating': '4.5',
-      },
-      {
-        'image': 'assets/images/home/image2.png',
-        'title': '대림창고 갤러리',
-        'subtitle': '성동구',
-        'rating': '4.1',
-      },
-      {
-        'image': 'assets/images/home/image3.png',
-        'title': '어니언 성수',
-        'subtitle': '성동구',
-        'rating': '4.3',
-      },
-    ];
-
-    courseList = [
-      {
-        'image': 'assets/images/home/image4.png',
-        'title': '실내 놀거리',
-        'subtitle': '트렌디 코스',
-      },
-      {
-        'image': 'assets/images/home/image8.png',
-        'subtitle': '고궁 산책',
-      },
-      {
-        'image': 'assets/images/home/image6.png',
-        'subtitle': '카페 투어',
-      },
-    ];
-    // setState 불필요, 이미 동기 초기화라 바로 렌더됨
   }
 
 /*
