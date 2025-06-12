@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/post.dart';
-import '../services/api_service.dart';
 import 'home_page.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
-
 
 class CommunityHomePage extends StatefulWidget {
   const CommunityHomePage({super.key});
@@ -13,12 +11,42 @@ class CommunityHomePage extends StatefulWidget {
 }
 
 class _CommunityHomePageState extends State<CommunityHomePage> {
-  late Future<List<Post>> futurePosts;
+  late List<Post> posts;
 
   @override
   void initState() {
     super.initState();
-    futurePosts = ApiService.fetchPosts();
+    posts = [
+      Post(
+        username: "work_play",
+        userAvatar: 'assets/community/user1.jpg',
+        createdAt: DateTime.now().subtract(const Duration(hours: 5)),
+        content: '''성수동에 핫한 대림창고 방문~
+넓은 창고를 현대적인 감성으로 재해석한 베이커리 카페로 다양한 빵과 음료를 함께 할 수 있음.
+가격이 저렴한 편은 아니지만 방문해볼만함.''',
+        images: [
+          'assets/community/post1_1.jpg',
+          'assets/community/post1_2.jpg',
+          'assets/community/post1_3.jpg',
+          'assets/community/post1_4.jpg',
+          'assets/community/post1_5.jpg',
+        ],
+        location: "성수동 대림창고 갤러리리",
+      ),
+      Post(
+        username: "alcoholfree",
+        userAvatar: 'assets/community/user2.jpg',
+        createdAt: DateTime.now().subtract(const Duration(hours: 9)),
+        content: '''사진이 예쁘게 나오고
+매장 입장은 예약을 해야 갈 수 있어요
+직원들도 친절하고 좋아요''',
+        images: [
+          'assets/community/post2_1.jpg',
+          'assets/community/post2_2.jpg',
+        ],
+        location: "크리스찬 디올 성수",
+      ),
+    ];
   }
 
   String _formatTimeAgo(DateTime createdAt) {
@@ -58,33 +86,23 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
           _buildStoryList(),
           const Divider(height: 1),
           Expanded(
-            child: FutureBuilder<List<Post>>(
-              future: futurePosts,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('에러 발생: \${snapshot.error}'));
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('게시글이 없습니다.'));
-                } else {
-                  return ListView.builder(
+            child: posts.isEmpty
+                ? const Center(child: Text('게시글이 없습니다.'))
+                : ListView.builder(
                     padding: const EdgeInsets.only(bottom: 80),
-                    itemCount: snapshot.data!.length,
+                    itemCount: posts.length,
                     itemBuilder: (context, index) {
-                      final post = snapshot.data![index];
+                      final post = posts[index];
                       return _buildPostCard(
                         username: post.username,
+                        userAvatar: post.userAvatar,
                         timeAgo: _formatTimeAgo(post.createdAt),
                         content: post.content,
                         imageUrls: post.images,
                         location: post.location,
                       );
                     },
-                  );
-                }
-              },
-            ),
+                  ),
           ),
         ],
       ),
@@ -93,7 +111,6 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
         padding: const EdgeInsets.only(bottom: 20),
         child: FloatingActionButton(
           onPressed: () {},
-          // mini: true,
           shape: const CircleBorder(),
           backgroundColor: Colors.white,
           child: const Icon(Icons.edit, size: 18, color: Colors.orangeAccent),
@@ -105,27 +122,22 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
 
   Widget _buildStoryList() {
     return SizedBox(
-      //height: 90,
       height: 115,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 10,
+        itemCount: posts.length,
         itemBuilder: (context, index) {
+          final user = posts[index];
           return Padding(
-            //padding: const EdgeInsets.symmetric(horizontal: 8),
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
                 CircleAvatar(
-                  //radius: 24,
                   radius: 30,
-                  backgroundColor: Colors.grey[200],
-                  child: const Icon(Icons.person, size: 20, color: Colors.orangeAccent),
+                  backgroundImage: AssetImage(user.userAvatar),
                 ),
-                //const SizedBox(height: 4),
                 const SizedBox(height: 8),
-                //Text('user\$index', style: const TextStyle(fontSize: 10)),
-                Text('user\$index', style: const TextStyle(fontSize: 13)),
+                Text(user.username, style: const TextStyle(fontSize: 13)),
               ],
             ),
           );
@@ -136,6 +148,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
 
   Widget _buildPostCard({
     required String username,
+    required String userAvatar,
     required String timeAgo,
     required String content,
     required List<String> imageUrls,
@@ -154,8 +167,7 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
             children: [
               CircleAvatar(
                 radius: 14,
-                backgroundColor: Colors.grey[200],
-                child: const Icon(Icons.person, size: 14, color: Colors.orangeAccent),
+                backgroundImage: AssetImage(userAvatar),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -188,12 +200,12 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(showImages[i], fit: BoxFit.cover),
+                      Image.asset(showImages[i], fit: BoxFit.cover),
                       if (i == 3 && moreCount > 0)
                         Container(
                           color: Colors.black.withOpacity(0.5),
                           alignment: Alignment.center,
-                          child: Text('+\$moreCount', style: const TextStyle(color: Colors.white, fontSize: 18)),
+                          child: Text('+$moreCount', style: const TextStyle(color: Colors.white, fontSize: 18)),
                         ),
                     ],
                   ),
@@ -213,7 +225,6 @@ class _CommunityHomePageState extends State<CommunityHomePage> {
               const Text('24', style: TextStyle(fontSize: 11)),
               const SizedBox(width: 12),
               const Icon(Icons.bookmark_border, size: 16),
-              const SizedBox(width: 4),
               const Spacer(),
               const Icon(Icons.location_on, size: 16, color: Colors.grey),
               const SizedBox(width: 2),
